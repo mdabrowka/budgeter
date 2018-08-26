@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View , Image, Button } from 'react-native';
+import { AppRegistry, StyleSheet, Text, View , Image, Button } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 import t from 'tcomb-form-native';
 import { calculateRoundedPrice, calculateSaving } from './calculations';
 
@@ -11,21 +12,28 @@ const Spending = t.struct({
   price: t.String
 });
 
-export default class App extends React.Component {
+class HomeScreen extends React.Component {
   state = {
     spendings: [],
+    savedToCoinJar: null,
   }
 
   handleSubmit = (event) => {
     const actualPrice = this._form.getValue().price;
     const roundedPrice = calculateRoundedPrice(actualPrice);
     const savedToCoinJar = calculateSaving(roundedPrice, actualPrice);
+    this.setState({
+      savedToCoinJar: savedToCoinJar
+    });
     console.log('logging saving', savedToCoinJar);
   }
 
   render() {
     let pic = {
       uri: "http://themellorpractice.co.uk/wp-content/uploads/2014/06/cash-money-pounds.jpg"
+    }
+    if (this.state.savedToCoinJar) {
+      return <Text style={styles.coinJarText}>You have saved {this.state.savedToCoinJar} to your Coin Jar</Text>
     }
     return (
       <View style={styles.container}>
@@ -56,5 +64,39 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     padding: 20,
-  }
+  },
+  coinJarText: {
+    fontSize: 30,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
+
+class DetailsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Details Screen</Text>
+      </View>
+    );
+  }
+}
+
+AppRegistry.registerComponent('App', () => App);
+
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Details: DetailsScreen,
+  },
+  {
+    initialRouteName: 'Home',
+  }
+);
+
+export default class App extends React.Component {
+  render() {
+    return <RootStack />;
+  }
+}
