@@ -18,7 +18,7 @@ class HomeScreen extends React.Component {
     savedToCoinJar: null,
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = () => {
     const actualPrice = this._form.getValue().price;
     const savedToCoinJar = calculateSaving(actualPrice);
     this.setState({
@@ -26,12 +26,25 @@ class HomeScreen extends React.Component {
     });
   }
 
+  handleReset = () => {
+    this.setState({
+      savedToCoinJar: null
+    })
+  }
+
   render() {
     let pic = {
       uri: "http://themellorpractice.co.uk/wp-content/uploads/2014/06/cash-money-pounds.jpg"
     }
     if (this.state.savedToCoinJar) {
-      return <Text style={styles.coinJarText}>You have saved {this.state.savedToCoinJar} to your Coin Jar</Text>
+      return
+      <View>
+      <Button
+      title="Reset"
+      onPress={this.handleReset}
+      ></Button> 
+      <Text style={styles.coinJarText}>You have saved £{this.state.savedToCoinJar} to your Coin Jar</Text>
+      </View>
     }
     return (
       <View style={styles.container}>
