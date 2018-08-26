@@ -2,7 +2,7 @@ import React from 'react';
 import { AppRegistry, StyleSheet, Text, View , Image, Button } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import t from 'tcomb-form-native';
-import { calculateRoundedPrice, calculateSaving } from './calculations';
+import { calculateSaving } from './calculations';
 
 
 const Form = t.form.Form;
@@ -20,12 +20,10 @@ class HomeScreen extends React.Component {
 
   handleSubmit = (event) => {
     const actualPrice = this._form.getValue().price;
-    const roundedPrice = calculateRoundedPrice(actualPrice);
-    const savedToCoinJar = calculateSaving(roundedPrice, actualPrice);
+    const savedToCoinJar = calculateSaving(actualPrice);
     this.setState({
       savedToCoinJar: savedToCoinJar
     });
-    console.log('logging saving', savedToCoinJar);
   }
 
   render() {
