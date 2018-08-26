@@ -29,13 +29,14 @@ export default class App extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <Text>Coin Jar</Text>
+        <Text style={styles.text}>Coin Jar</Text>
         <Image source={pic} style={{width: 193, height: 110}}/>
+        <Text style={styles.text}>Log spending and calculate your Coin Jar saving</Text>
           <Form 
           ref={c => this._form = c} 
           type={Spending} />
           <Button
-          title="Log spending and calculate CoinJar saving"
+          title="Submit"
           onPress={this.handleSubmit}
         />
       </View>
@@ -49,7 +50,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 50,
+    marginTop: 30,
     padding: 20,
   },
+  text: {
+    fontSize: 20,
+    padding: 20,
+  }
 });
