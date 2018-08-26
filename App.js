@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View , Image, Button } from 'react-native';
-import { FormLabel, FormInput } from 'react-native-elements';
 import t from 'tcomb-form-native';
+import { calculateRoundedPrice, calculateSaving } from './calculations';
 
 
 const Form = t.form.Form;
@@ -17,8 +17,10 @@ export default class App extends React.Component {
   }
 
   handleSubmit = (event) => {
-    const value = this._form.getValue(); 
-    console.log('value: ', value);
+    const actualPrice = this._form.getValue().price;
+    const roundedPrice = calculateRoundedPrice(actualPrice);
+    const savedToCoinJar = calculateSaving(roundedPrice, actualPrice);
+    console.log('logging saving', savedToCoinJar);
   }
 
   render() {
@@ -33,7 +35,7 @@ export default class App extends React.Component {
           ref={c => this._form = c} 
           type={Spending} />
           <Button
-          title="Log spending"
+          title="Log spending and calculate CoinJar saving"
           onPress={this.handleSubmit}
         />
       </View>
