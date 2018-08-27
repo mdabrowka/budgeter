@@ -4,6 +4,7 @@ To run this project:
 1. pull the repo
 2. npm install
 3. npm start
+4. follow instructions on the terminal window regarding viewing the app in dev mode on ios or Android devices
 
 
 This is work in progress. Next steps for this project:
